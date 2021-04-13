@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const fs = require('fs');
 const bot = new Discord.Client();
 const { prefix, token } = require('./config.json');
+const keepAlive = require('./server');
 bot.commands = new Discord.Collection();
 
 fs.readdir("./commands/", (err, files) => {
@@ -19,15 +20,15 @@ fs.readdir("./commands/", (err, files) => {
 });
 
 bot.on('ready', () => {
-  console.log(`Logged in as ${bot.user.tag}, ${bot.guilds.size} servers.`);
+  console.log(`Logged in as ${bot.user.tag}`);
   // bot.user.setActivity('.help | Management', { type: 'Playing' });
   let idek = 0;
   idek++;
   console.log(`Updated ${idek}!`);
   let count = 0;
   function changeStatus() {
-      let status = [`Centrect`, "Centrect's Stream", "Moderating Chat..."]
-      let type = ["LISTENING", "WATCHING", "PLAYING"];
+      let status = [`Members`, "Centrect's Stream", ".help | Centrect"]
+      let type = ["WATCHING", "WATCHING", "PLAYING"];
       let random = status[count];
       let randomType = type[count];
       bot.user.setActivity(random, {type:randomType});
@@ -57,5 +58,7 @@ bot.on('ready', () => {
       }
     }
   )
+
+keepAlive();
 
 bot.login(token);
